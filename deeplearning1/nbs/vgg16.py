@@ -17,7 +17,7 @@ from keras.optimizers import SGD, RMSprop, Adam
 from keras.preprocessing import image
 
 
-vgg_mean = np.array([123.68, 116.779, 103.939], dtype=np.float32).reshape((3,1,1))
+vgg_mean = np.array([123.68, 116.779, 103.939], dtype=np.float32).reshape((1,1,3))
 def vgg_preprocess(x):
     x = x - vgg_mean
     return x[:, ::-1] # reverse axis rgb->bgr
@@ -64,7 +64,7 @@ class Vgg16():
 
     def create(self):
         model = self.model = Sequential()
-        model.add(Lambda(vgg_preprocess, input_shape=(3,224,224), output_shape=(3,224,224)))
+        model.add(Lambda(vgg_preprocess, input_shape=(224, 224, 3), output_shape=(224, 224, 3)))
 
         self.ConvBlock(2, 64)
         self.ConvBlock(2, 128)
